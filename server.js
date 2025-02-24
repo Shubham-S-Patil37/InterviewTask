@@ -24,36 +24,25 @@ app.get('/testEndPoint', function (req, res) {
 
 
 app.get('/getAllUser', async function (req, res) {
-  var response = await userService.getAllUser()
-  res.json(response)
+  userService.getAllUser().then(newTask => { res.status(201).json(newTask); }).catch(error => { res.status(error.StatusCode || 500).json({ message: error.message }); });
 });
 
 app.post('/addUser', function (req, res) {
-  var response = userService.addUser()
-  res.json(response)
+  userService.addUser().then(newTask => { res.status(201).json(newTask); }).catch(error => { res.status(error.StatusCode || 500).json({ message: error.message }); });
 });
 
 app.post('/task', async function (req, res) {
-  taskService.createNewTask(req.body)
-    .then(newTask => {
-      res.status(201).json(newTask);
-    })
-    .catch(error => {
-      res.status(error.StatusCode || 500).json({ message: error.message });
-    });
+  taskService.createNewTask(req.body).then(newTask => { res.status(201).json(newTask); }).catch(error => { res.status(error.StatusCode || 500).json({ message: error.message }); });
 });
 
 app.get('/task', async function (req, res) {
-  var response = await taskService.getAll()
-  res.json(response)
+  taskService.getAll().then(newTask => { res.status(201).json(newTask); }).catch(error => { res.status(error.StatusCode || 500).json({ message: error.message }); });
 });
 
 app.delete('/task', async function (req, res) {
-  var response = await taskService.deleteTask(req.query.taskId, req.query.taskId)
-  res.json(response)
+  taskService.deleteTask(req.query.taskId, req.query.taskId).then(newTask => { res.status(201).json(newTask); }).catch(error => { res.status(error.StatusCode || 500).json({ message: error.message }); });
 });
 
 app.put('/task', async function (req, res) {
-  var response = await taskService.updateTask(req.body)
-  res.json(response)
+  taskService.updateTask(req.body).then(newTask => { res.status(201).json(newTask); }).catch(error => { res.status(error.StatusCode || 500).json({ message: error.message }); });
 });
