@@ -34,8 +34,13 @@ app.post('/addUser', function (req, res) {
 });
 
 app.post('/task', async function (req, res) {
-  var response = await taskService.createNewTask(req.body)
-  res.json(response)
+  taskService.createNewTask(req.body)
+    .then(newTask => {
+      res.status(201).json(newTask);
+    })
+    .catch(error => {
+      res.status(error.StatusCode || 500).json({ message: error.message });
+    });
 });
 
 app.get('/task', async function (req, res) {
